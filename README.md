@@ -1,4 +1,4 @@
-### La financiere Api server
+### Swapit Api server
 
 ## General
 
