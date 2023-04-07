@@ -104,13 +104,17 @@ export default function AllRoutes() {
  *       properties:
  *         id:
  *           type: string
- *         propertyValue:
- *           type: number
- *         mortgageValance:
- *           type: number
- *         utilityOfFunding:
+ *         brandName:
  *           type: string
- *         userInformation:
+ *         description:
+ *           type: string
+ *         tags:
+ *           type: [string]
+ *         creator:
+ *           type: string
+ *         name:
+ *           type: string
+ *         productInformation:
  *           type: object
  *           properties:
  *             brandName:
