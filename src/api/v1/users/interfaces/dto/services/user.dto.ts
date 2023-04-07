@@ -26,4 +26,11 @@ export interface IUpdateUserDto {
   email?: string;
   password?: string;
   phoneNumber?: string;
+  lastConnectionDate?: Date;
+}
+
+export interface IResetUserPasswordDto {
+  id: string;
+  password: string;
+  resetPasswordRequestId: string | undefined | null;
 }

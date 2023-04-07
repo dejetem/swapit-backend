@@ -9,7 +9,5 @@ export interface TeamMemberTokenPayload {
 }
 
 export enum UserType {
-  RESTAURANT = "RESTAURANT",
-  ADMIN = "ADMIN",
-  TEAMMEMBER = "TEAMMEMBER",
+  USER = "USER",
 }

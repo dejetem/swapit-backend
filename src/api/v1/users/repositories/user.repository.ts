@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import { FilterQuery } from "mongoose";
 
 import UserModel from "../models/user.model";
@@ -10,6 +11,7 @@ import { IFindAllUserDto } from "../interfaces/dto/services/user.dto";
 import { User } from "../interfaces/user.model";
 
 import { QuerySort } from "../../../../interfaces/models/query.enum";
+import EnvironmentConfigs from "../../../../configs/environments";
 
 export default class UserRepository {
   public async countAll(): Promise<number> {
@@ -30,6 +32,36 @@ export default class UserRepository {
 
   public async findById(id: string): Promise<User | null> {
     return await UserModel.findById(id);
+  }
+
+  public async findByEmail(email: string): Promise<User | null> {
+    
+    return await UserModel.findOne({email});
+  }
+
+  public async findByResetPasswordRequestId(
+    requestId: string
+  ): Promise<User | null> {
+    const query = { resetPasswordRequestId: requestId };
+    return await UserModel.findOne(query);
+  }
+
+  public async findByResetToken(token: string): Promise<User | null> {
+    const query = { resetToken: token };
+    return await UserModel.findOne(query).select(
+      "resetToken resetTokenExpiration email"
+    );
+  }
+
+  public async generateResetPasswordToken(id: string): Promise<User | null> {
+    const user = await UserModel.findById(id);
+    if (!user) return null;
+
+    user.resetToken = crypto.randomBytes(60).toString("hex");
+    user.resetTokenExpiration = new Date(
+      Date.now() + EnvironmentConfigs.getResetPasswordTokenDuration()
+    );
+    return await user.save();
   }
 
   public async create(createUserDto: CreateUserDto): Promise<User> {

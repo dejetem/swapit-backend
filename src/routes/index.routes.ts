@@ -1,10 +1,13 @@
 import { Router } from "express";
 
 import UserRoutes from "../api/v1/users/routes/user.routes";
+import AuthRoutes from "../api/v1/auth/routes/auth.routes";
 
 import UserManagementController from "../api/v1/users/controllers/user.controller";
+import AuthController from "../api/v1/auth/controllers/auth.controller";
 
 import UserService from "../api/v1/users/services/user.service";
+import AuthService from "../api/v1/auth/services/auth.service";
 
 import UserRepository from "../api/v1/users/repositories/user.repository";
 
@@ -25,6 +28,14 @@ export default function AllRoutes() {
       )
     )
   );
+  router.use(
+    "/v1/auth",
+    AuthRoutes(
+      new AuthController(
+        new AuthService(new UserService(new UserRepository()))
+      )
+    )
+  );
 
   return router;
 }
@@ -36,28 +47,22 @@ export default function AllRoutes() {
  *     User:
  *       type: object
  *       required:
- *         - propertyValue
- *         - mortgageValance
- *         - utilityOfFunding
- *         - userInformation
+ *         - firstName
+ *         - lastName
+ *         - email
+ *         - password
+ *         - phoneNumber
  *       properties:
  *         id:
  *           type: string
- *         propertyValue:
+ *         firstName:
  *           type: number
- *         mortgageValance:
+ *         lastName:
  *           type: number
- *         utilityOfFunding:
+ *         email:
  *           type: string
- *         userInformation:
- *           type: object
- *           properties:
- *             firstName:
- *               type: string
- *             lastName:
- *               type: string
- *             phoneNumber:
- *               type: string
- *             courielAddress:
- *               type: string
+ *         password:
+ *           type: string
+ *         phoneNumber:
+ *           type: string
  */

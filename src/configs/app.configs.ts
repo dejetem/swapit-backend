@@ -50,7 +50,7 @@ export default class ApplicationConfigs {
     /**
      * @description Add JWT protection to all routes
      */
-    app.use(expressjwt(expressJwtConfigs).unless({ path: [/^\/api\/v1\/managements\/user/] }));
+    app.use(expressjwt(expressJwtConfigs).unless({ path: [/^\/api\/v1\/managements\/user/, /^\/api\/v1\/auth\/*/] }));
   }
 
   static initRoutes(app: Application): void {

@@ -10,6 +10,7 @@ import {
   IFindAllUserDto,
   ICreateUserDto,
   IUpdateUserDto,
+  IResetUserPasswordDto,
 } from "../interfaces/dto/services/user.dto";
 import {
   CreateUserDto,
@@ -66,13 +67,72 @@ export default class UserService {
   }
 
   /**
+   * @function findByEmail
+   * @description: Get a user by email
+   * @param email: The user email.
+   * @return Promise<User>
+   */
+  public async findByEmail(email: string): Promise<User> {
+    let user = await this.userRepository.findByEmail(email);
+
+    if (!user) {
+      throw new createHttpError.NotFound(UserValidationMessage.NOT_FOUND);
+    }
+
+    return user;
+  }
+
+  /**
+   * TODO
+   * @function resetUserPassword
+   * @description
+   * @param iResetTeacherPasswordDto
+   * @return void
+   */
+  public async resetUserPassword(
+    iResetTeacherPasswordDto: IResetUserPasswordDto
+  ): Promise<void> {
+    const updateTeacherDto: UpdateUserDto = {
+      id: iResetTeacherPasswordDto.id,
+      password: iResetTeacherPasswordDto.password,
+      resetPasswordRequestId: iResetTeacherPasswordDto.resetPasswordRequestId,
+    };
+    await this.userRepository.update(updateTeacherDto);
+
+    return;
+  }
+
+  /**
+   * @function findByResetPasswordRequestId
+   * @description Get teacher by reset password request id
+   * @param requestId The request id
+   * @return Promise<Teacher | null>
+   */
+  public async findByResetPasswordRequestId(
+    requestId: string
+  ): Promise<User | null> {
+    return await this.userRepository.findByResetPasswordRequestId(requestId);
+  }
+
+  /**
+   * TODO
+   * @function generateResetPasswordToken
+   * @description
+   * @param id
+   * @return Promise<User | null>
+   */
+  public async generateResetPasswordToken(id: string): Promise<User | null> {
+    return await this.userRepository.generateResetPasswordToken(id);
+  }
+
+  /**
    * @function create
    * @description: Create User
    * @param iCreateUserDto: An object of type CreateUserDto containing the User information.
    * @return Promise<User>
    */
   public async create(iCreateUserDto: ICreateUserDto): Promise<User> {
-    let phoneNumber = GeneralHelpers.getPhoneNumber(iCreateUserDto.phoneNumber);
+    //let phoneNumber = GeneralHelpers.getPhoneNumber(iCreateUserDto.phoneNumber);
 
     let hashPassword: string = await PasswordHelpers.hashPassword(
       iCreateUserDto.password
