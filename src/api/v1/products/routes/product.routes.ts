@@ -204,7 +204,7 @@ export default function ProductRoutes(
   router.post(
     "/",
     [
-      body([" brandName", "description", "selectedFile", "tags"])
+      body(["brandName", "description", "selectedFile", "tags"])
         .not()
         .isEmpty()
         .withMessage({

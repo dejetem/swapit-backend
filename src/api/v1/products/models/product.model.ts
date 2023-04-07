@@ -13,7 +13,7 @@ const productSchema = new Schema(
         required:true
     },
     creator: {
-        type:String,
+        type: Schema.Types.ObjectId,
         required:true
     },
     name: String,

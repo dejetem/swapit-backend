@@ -86,6 +86,8 @@ export default class ProductManagementController {
 
       const sub: any = req.auth;
 
+      console.log(sub);
+      
       const { brandName, description, tags, selectedFile, name } = req.body;
 
       const ICreateProductDto: ICreateProductDto = {
