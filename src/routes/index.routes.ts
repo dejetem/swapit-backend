@@ -11,6 +11,14 @@ import AuthService from "../api/v1/auth/services/auth.service";
 
 import UserRepository from "../api/v1/users/repositories/user.repository";
 
+import ProductRoutes from "../api/v1/products/routes/product.routes";
+
+import ProductManagementController from "../api/v1/products/controllers/product.controller";
+
+import ProductService from "../api/v1/products/services/product.service";
+
+import ProductRepository from "../api/v1/products/repositories/product.repository";
+
 
 /**
  * @description Router configuration
@@ -33,6 +41,15 @@ export default function AllRoutes() {
     AuthRoutes(
       new AuthController(
         new AuthService(new UserService(new UserRepository()))
+      )
+    )
+  );
+
+  router.use(
+    "/v1/managements/product",
+    ProductRoutes(
+      new ProductManagementController(
+        new ProductService(new ProductRepository())
       )
     )
   );
@@ -65,4 +82,56 @@ export default function AllRoutes() {
  *           type: string
  *         phoneNumber:
  *           type: string
+ *         userInformation:
+ *           type: object
+ *           properties:
+ *             firstName:
+ *               type: string
+ *             lastName:
+ *               type: string
+ *             phoneNumber:
+ *               type: string
+ *             courielAddress:
+ *               type: string
+ *     Product:
+ *       type: object
+ *       required:
+ *         - brandName
+ *         - description
+ *         - tags
+ *         - creator
+ *         - name
+ *       properties:
+ *         id:
+ *           type: string
+ *         brandName:
+ *           type: string
+ *         description:
+ *           type: string
+ *         tags:
+ *           type: [string]
+ *         creator:
+ *           type: string
+ *         name:
+ *           type: string
+ *         productInformation:
+ *           type: object
+ *           properties:
+ *             brandName:
+ *               type: string
+ *             description:
+ *               type: string
+ *             tags:
+ *               type: [string]
+ *             selectedFile:
+ *               type: string
+ *             likeCount:
+ *                type: [string]
+ *             comments:
+ *                 type: [string]
+ *             creator:
+ *                 type: string
+ *             name:
+ *                 type: string
+ *        
  */
