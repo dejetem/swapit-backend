@@ -21,6 +21,8 @@ export default function ProductRoutes(
    * @swagger
    * /api/v1/managements/product:
    *   get:
+   *     security:
+   *      - bearerAuth: []
    *     summary: Get list of products.
    *     tags: [Product Management]
    *     parameters:
@@ -100,6 +102,8 @@ export default function ProductRoutes(
    * @swagger
    * /api/v1/managements/product/{id}:
    *   get:
+   *     security:
+   *       - bearerAuth: []
    *     summary: Get one Product by id.
    *     tags: [Product Management]
    *     parameters:
@@ -142,6 +146,8 @@ export default function ProductRoutes(
    * @swagger
    * /api/v1/managements/product:
    *   post:
+   *     security:
+   *       - bearerAuth: []
    *     summary: Create a prouduct
    *     tags: [Product Management]
    *     requestBody:
@@ -151,35 +157,26 @@ export default function ProductRoutes(
    *          schema:
    *            type: object
    *            properties:
-   *              propertyValue:
-   *                type: number
-   *                required: true
-   *                example: 100000
-   *              mortgageValance:
-   *                type: number
-   *                required: true
-   *                example: 1000
-   *              utilityOfFunding:
-   *                type: string
-   *                required: true
-   *                example: Payer des cartes de crédit.
    *              brandName:
    *                type: string
    *                required: true
-   *                example: "John"
+   *                example: apple watch ultra
    *              description:
    *                type: string
    *                required: true
-   *                example: "Doe"
+   *                example: lorem ipsum dolor sit amet
    *              tags:
-   *                type: [string]
+   *                type: string
    *                required: true
-   *                example: "jonhdoe"
+   *                example: items.
    *              selectedFile:
    *                type: string
-   *                required: false
-   *                example: "image base64 url"
-   * 
+   *                required: true
+   *                example: lorem
+   *              name:
+   *                type: string
+   *                required: true
+   *                example: "Doe"
    *     responses:
    *       201:
    *         description: product successufully created.
@@ -207,29 +204,13 @@ export default function ProductRoutes(
   router.post(
     "/",
     [
-      body([
-        " brandName",
-      ])
+      body([" brandName", "description", "selectedFile", "tags"])
         .not()
         .isEmpty()
         .withMessage({
           message: ProductValidationMessage.FIELD_REQUIRED,
           errorCode: 0,
         }),
-      body("description")
-        .notEmpty()
-        .withMessage({
-          message: ProductValidationMessage.FIELD_REQUIRED,
-          errorCode: 0,
-        }),
-      body("selectedFile"),
-      body("tags")
-        .not()
-        .isEmpty()
-        .withMessage({
-          message: ProductValidationMessage.FIELD_REQUIRED,
-          errorCode: 0,
-        })
     ],
     (req: Request, res: Response, next: NextFunction) =>
       productManagementController.create(req, res, next)
@@ -239,6 +220,8 @@ export default function ProductRoutes(
    * @swagger
    * /api/v1/managements/product/{id}:
    *   put:
+   *     security:
+   *       - bearerAuth: []
    *     summary: Edit a proudct.
    *     tags: [Product Management]
    *     parameters:
@@ -254,34 +237,26 @@ export default function ProductRoutes(
    *           schema:
    *             type: object
    *             properties:
-   *              propertyValue:
-   *                type: number
-   *                required: true
-   *                example: 100000
-   *              mortgageValance:
-   *                type: number
-   *                required: true
-   *                example: 1000
-   *              utilityOfFunding:
-   *                type: string
-   *                required: true
-   *                example: Payer des cartes de crédit.
    *              brandName:
    *                type: string
    *                required: true
-   *                example: "John"
+   *                example: apple watch ultra
    *              description:
    *                type: string
    *                required: true
-   *                example: "Doe"
+   *                example: lorem ipsum dolor sit amet
    *              tags:
-   *                type: [string]
+   *                type: string
    *                required: true
-   *                example: "jonhdoe"
+   *                example: items.
    *              selectedFile:
    *                type: string
-   *                required: false
-   *                example: "image base64 url"
+   *                required: true
+   *                example: lorem
+   *              name:
+   *                type: string
+   *                required: true
+   *                example: "Doe"
    *     responses:
    *       201:
    *         description: Product information successfully updated.
@@ -311,29 +286,13 @@ export default function ProductRoutes(
   router.put(
     "/:id",
     [
-      body([
-        " brandName",
-      ])
+      body([" brandName", "description", "selectedFile", "tags"])
         .not()
         .isEmpty()
         .withMessage({
           message: ProductValidationMessage.FIELD_REQUIRED,
           errorCode: 0,
         }),
-      body("description")
-        .notEmpty()
-        .withMessage({
-          message: ProductValidationMessage.FIELD_REQUIRED,
-          errorCode: 0,
-        }),
-      body("selectedFile"),
-      body("tags")
-        .not()
-        .isEmpty()
-        .withMessage({
-          message: ProductValidationMessage.FIELD_REQUIRED,
-          errorCode: 0,
-        })
     ],
     (req: Request, res: Response, next: NextFunction) =>
       productManagementController.update(req, res, next)

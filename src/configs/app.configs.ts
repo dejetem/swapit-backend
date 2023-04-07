@@ -45,12 +45,19 @@ export default class ApplicationConfigs {
     /**
      * @description Set mongoose in strict mode
      */
-    mongoose.set('strictQuery', false);
+    mongoose.set("strictQuery", false);
 
     /**
      * @description Add JWT protection to all routes
      */
-    app.use(expressjwt(expressJwtConfigs).unless({ path: [/^\/api\/v1\/managements\/user/, /^\/api\/v1\/auth\/*/] }));
+    app.use(
+      expressjwt(expressJwtConfigs).unless({
+        path: [
+          /^\/api\/v1\/managements\/user/,
+          /^\/api\/v1\/auth\/*/,
+        ],
+      })
+    );
   }
 
   static initRoutes(app: Application): void {

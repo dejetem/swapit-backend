@@ -2,7 +2,6 @@ import { Response, Request, NextFunction } from "express";
 import { Request as JWTRequest } from "express-jwt";
 import { validationResult } from "express-validator";
 import ProductService from "../services/product.service";
-import Product from "../models/product.model"
 
 import {
   IFindAllProductDto,
@@ -35,7 +34,9 @@ export default class ProductManagementController {
         size: Number(size) || EnvironmentConfigs.getPaginationItemsPerPage(),
       };
 
-      const { product, totalElements } = await this.productService.findAll(params);
+      const { product, totalElements } = await this.productService.findAll(
+        params
+      );
 
       const response = GeneralHelpers.getPage(
         product,
@@ -55,7 +56,7 @@ export default class ProductManagementController {
     }
   }
 
-  public async findOne(req: Request, res: Response, next: NextFunction) {
+  public async findOne(req: JWTRequest, res: Response, next: NextFunction) {
     try {
       let { id } = req.params;
 
@@ -85,29 +86,23 @@ export default class ProductManagementController {
 
       const sub: any = req.auth;
 
-      const {
-        brandName,
-        description,
-        tags,
-        selectedFile,
-        creator,
-        name,
-      } = req.body;
+      const { brandName, description, tags, selectedFile, name } = req.body;
 
       const ICreateProductDto: ICreateProductDto = {
         brandName,
         description,
         tags,
         selectedFile,
-        creator,
+        creator: sub.userId,
         name,
       };
-        const product = await this.productService.create(ICreateProductDto);
+      const product = await this.productService.create(ICreateProductDto);
 
-        res
-          .status(201)
-          .json(ApiResponses.success({ product }, "Product successfully created."));
-
+      res
+        .status(201)
+        .json(
+          ApiResponses.success({ product }, "Product successfully created.")
+        );
     } catch (err: any) {
       if (!err.status) {
         err.status = 500;
@@ -116,7 +111,7 @@ export default class ProductManagementController {
     }
   }
 
-  public async update(req: Request, res: Response, next: NextFunction) {
+  public async update(req: JWTRequest, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req);
 
@@ -136,7 +131,7 @@ export default class ProductManagementController {
         tags,
         selectedFile,
         likeCount,
-        comments
+        comments,
       } = req.body;
 
       const IUpdateProductDto: IUpdateProductDto = {
@@ -148,13 +143,15 @@ export default class ProductManagementController {
         tags,
         selectedFile,
         likeCount,
-        comments
+        comments,
       };
 
       const product = await this.productService.update(IUpdateProductDto);
       res
         .status(201)
-        .json(ApiResponses.success({ product }, "Product successfully updated."));
+        .json(
+          ApiResponses.success({ product }, "Product successfully updated.")
+        );
     } catch (err: any) {
       if (!err.status) {
         err.status = 500;
@@ -163,7 +160,7 @@ export default class ProductManagementController {
     }
   }
 
-  public async delete(req: Request, res: Response, next: NextFunction) {
+  public async delete(req: JWTRequest, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req);
 

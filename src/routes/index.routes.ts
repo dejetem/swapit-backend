@@ -82,17 +82,6 @@ export default function AllRoutes() {
  *           type: string
  *         phoneNumber:
  *           type: string
- *         userInformation:
- *           type: object
- *           properties:
- *             firstName:
- *               type: string
- *             lastName:
- *               type: string
- *             phoneNumber:
- *               type: string
- *             courielAddress:
- *               type: string
  *     Product:
  *       type: object
  *       required:
@@ -113,25 +102,5 @@ export default function AllRoutes() {
  *         creator:
  *           type: string
  *         name:
- *           type: string
- *         productInformation:
- *           type: object
- *           properties:
- *             brandName:
- *               type: string
- *             description:
- *               type: string
- *             tags:
- *               type: [string]
- *             selectedFile:
- *               type: string
- *             likeCount:
- *                type: [string]
- *             comments:
- *                 type: [string]
- *             creator:
- *                 type: string
- *             name:
- *                 type: string
- *        
+ *           type: string       
  */

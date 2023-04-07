@@ -16,7 +16,9 @@ export default class ProductRepository {
     return await this.count();
   }
 
-  public async findAll(IFindAllProductDto: IFindAllProductDto): Promise<Product[]> {
+  public async findAll(
+    IFindAllProductDto: IFindAllProductDto
+  ): Promise<Product[]> {
     if (IFindAllProductDto.page && IFindAllProductDto.size) {
       return await ProductModel.find()
         .skip((IFindAllProductDto.page - 1) * IFindAllProductDto.size)
@@ -33,34 +35,38 @@ export default class ProductRepository {
   }
 
   public async create(CreateProductDto: CreateProductDto): Promise<Product> {
-
     const product: any = await ProductModel.create({
       brandName: CreateProductDto.brandName,
       description: CreateProductDto.description,
       tags: CreateProductDto.tags,
       selectedFile: CreateProductDto.selectedFile,
       creator: CreateProductDto.creator,
-      name: CreateProductDto.name
+      name: CreateProductDto.name,
     });
     return product;
   }
 
-  public async update(UpdateProductDto: UpdateProductDto): Promise<Product | null> {
+  public async update(
+    UpdateProductDto: UpdateProductDto
+  ): Promise<Product | null> {
     const product = await ProductModel.findById(UpdateProductDto.id);
     if (!product) return null;
 
-    if (UpdateProductDto.brandName) product.brandName = UpdateProductDto.brandName;
+    if (UpdateProductDto.brandName)
+      product.brandName = UpdateProductDto.brandName;
 
-    if (UpdateProductDto.description) product.description = UpdateProductDto.description;
-
+    if (UpdateProductDto.description)
+      product.description = UpdateProductDto.description;
 
     if (UpdateProductDto.tags) product.tags = UpdateProductDto.tags;
 
-    if (UpdateProductDto.selectedFile) product.selectedFile = UpdateProductDto.selectedFile;
+    if (UpdateProductDto.selectedFile)
+      product.selectedFile = UpdateProductDto.selectedFile;
 
     if (UpdateProductDto.comments) product.comments = UpdateProductDto.comments;
 
-    if (UpdateProductDto.likeCount) product.likeCount = UpdateProductDto.likeCount;
+    if (UpdateProductDto.likeCount)
+      product.likeCount = UpdateProductDto.likeCount;
 
     if (UpdateProductDto.creator) product.creator = UpdateProductDto.creator;
 
