@@ -20,4 +20,10 @@ export interface UpdateProductDto {
   comments?: [string];
   likeCount?: [string]
 }
+export interface CreateCommentDto {
+  description: string;
+  creator: string;
+  name: string;
+  product: string
+}
 
