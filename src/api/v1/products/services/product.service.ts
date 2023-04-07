@@ -94,6 +94,12 @@ export default class ProductService {
   public async update(IUpdateProductDto: IUpdateProductDto): Promise<Product> {
     let product: any = await this.findOne(IUpdateProductDto.id);
 
+    let likeCountNumber: any = null;
+    if(!product){
+      throw new createHttpError.NotFound(ProductValidationMessage.NOT_FOUND);
+    }else{
+      likeCountNumber = product.likeCount += 1;
+    }
 
     const UpdateProductDto: UpdateProductDto = {
       id: IUpdateProductDto.id,
@@ -104,7 +110,7 @@ export default class ProductService {
       creator: IUpdateProductDto.creator,
       name: IUpdateProductDto.name,
       comments: IUpdateProductDto.comments,
-      likeCount: IUpdateProductDto.likeCount
+      likeCount: likeCountNumber
     };
 
     product = await this.productRepository.update(UpdateProductDto);
