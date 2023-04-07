@@ -71,6 +71,23 @@ export default class UserManagementController {
     }
   }
 
+  public async findByEmail(req: Request, res: Response, next: NextFunction) {
+    try {
+      let { email } = req.params;
+
+      const user = await this.userService.findByEmail(email);
+
+      res
+        .status(200)
+        .json(ApiResponses.success({ user }, "User successfully found."));
+    } catch (err: any) {
+      if (!err.status) {
+        err.status = 500;
+      }
+      next(err);
+    }
+  }
+
   public async create(req: JWTRequest, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req);
@@ -101,6 +118,8 @@ export default class UserManagementController {
       };
         const user = await this.userService.create(iCreateUserDto);
 
+        console.log(user);
+        
         res
           .status(201)
           .json(ApiResponses.success({ user }, "User successfully created."));
@@ -109,6 +128,7 @@ export default class UserManagementController {
       if (!err.status) {
         err.status = 500;
       }
+      console.log(err);
       next(err);
     }
   }

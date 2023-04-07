@@ -140,6 +140,48 @@ export default function UserRoutes(
 
   /**
    * @swagger
+   * /api/v1/managements/user/{email}:
+   *   get:
+   *     summary: Recupérer les données d'un utilisateur.
+   *     tags: [User Management]
+   *     parameters:
+   *       - in: path
+   *         name: email
+   *         schema:
+   *           type: string
+   *           required: true
+   *     responses:
+   *       200:
+   *         description: User successfully found.
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                  data:
+   *                    type: object
+   *                    properties:
+   *                      User:
+   *                        $ref: '#/components/schemas/User'
+   *                  success:
+   *                    type: boolean
+   *                    example: true
+   *                  message:
+   *                    type: string
+   *                    example: User successfully found.
+   *       401:
+   *         description: Unthorized
+   *       404:
+   *         description: User not found.
+   *       500:
+   *         description: Erreur server
+   */
+  router.get("/:email", (req: Request, res: Response, next: NextFunction) =>
+    userManagementController.findByEmail(req, res, next)
+  );
+
+  /**
+   * @swagger
    * /api/v1/managements/user:
    *   post:
    *     summary: Créer un user
@@ -151,34 +193,30 @@ export default function UserRoutes(
    *          schema:
    *            type: object
    *            properties:
-   *              propertyValue:
-   *                type: number
-   *                required: true
-   *                example: 100000
-   *              mortgageValance:
-   *                type: number
-   *                required: true
-   *                example: 1000
-   *              utilityOfFunding:
-   *                type: string
-   *                required: true
-   *                example: Payer des cartes de crédit.
    *              firstName:
    *                type: string
    *                required: true
-   *                example: "John"
+   *                example: John
    *              lastName:
    *                type: string
    *                required: true
-   *                example: "Doe"
+   *                example: Doe
+   *              email:
+   *                type: string
+   *                required: true
+   *                example: johndoe@gmail.com
+   *              password:
+   *                type: string
+   *                required: true
+   *                example: 1234567890
+   *              confirmePassword:
+   *                type: string
+   *                required: true
+   *                example: 1234567890
    *              phoneNumber:
    *                type: string
    *                required: true
-   *                example: "+12505550199"
-   *              courielAddress:
-   *                type: string
-   *                required: true
-   *                example: "jonhdoe@test.com"
+   *                example: +12505550199
    *     responses:
    *       201:
    *         description: user successufully created.
@@ -207,11 +245,10 @@ export default function UserRoutes(
     "/",
     [
       body([
-        "propertyValue",
-        "mortgageValance",
-        "utilityOfFunding",
         "firstName",
         "lastName",
+        "password",
+        "phoneNumber",
       ])
         .not()
         .isEmpty()
@@ -219,15 +256,7 @@ export default function UserRoutes(
           message: UserValidationMessage.FIELD_REQUIRED,
           errorCode: 0,
         }),
-      body("phoneNumber")
-        .notEmpty()
-        .withMessage({
-          message: UserValidationMessage.FIELD_REQUIRED,
-          errorCode: 0,
-        })
-        .isMobilePhone("en-CA")
-        .withMessage("Le numéro de téléphone n'est pas valide"),
-      body("courielAddress")
+      body("email")
         .not()
         .isEmpty()
         .withMessage({
@@ -264,34 +293,30 @@ export default function UserRoutes(
    *           schema:
    *             type: object
    *             properties:
-   *              propertyValue:
-   *                type: number
-   *                required: true
-   *                example: 100000
-   *              mortgageValance:
-   *                type: number
-   *                required: true
-   *                example: 1000
-   *              utilityOfFunding:
-   *                type: string
-   *                required: true
-   *                example: Payer des cartes de crédit.
    *              firstName:
    *                type: string
    *                required: true
-   *                example: "John"
+   *                example: John
    *              lastName:
    *                type: string
    *                required: true
-   *                example: "Doe"
+   *                example: Doe
+   *              email:
+   *                type: string
+   *                required: true
+   *                example: johndoe@gmail.com
+   *              password:
+   *                type: string
+   *                required: true
+   *                example: 1234567890
+   *              confirmePassword:
+   *                type: string
+   *                required: true
+   *                example: 1234567890
    *              phoneNumber:
    *                type: string
    *                required: true
-   *                example: "+12505550199"
-   *              courielAddress:
-   *                type: string
-   *                required: true
-   *                example: "jonhdoe@test.com"
+   *                example: +12505550199
    *     responses:
    *       201:
    *         description: User information successfully updated.
@@ -322,11 +347,10 @@ export default function UserRoutes(
     "/:id",
     [
       body([
-        "propertyValue",
-        "mortgageValance",
-        "utilityOfFunding",
         "firstName",
         "lastName",
+        "password",
+        "phoneNumber",
       ])
         .not()
         .isEmpty()
@@ -334,15 +358,7 @@ export default function UserRoutes(
           message: UserValidationMessage.FIELD_REQUIRED,
           errorCode: 0,
         }),
-      body("phoneNumber")
-        .notEmpty()
-        .withMessage({
-          message: UserValidationMessage.FIELD_REQUIRED,
-          errorCode: 0,
-        })
-        .isMobilePhone("en-CA")
-        .withMessage("Invalid phone number"),
-      body("courielAddress")
+      body("email")
         .not()
         .isEmpty()
         .withMessage({

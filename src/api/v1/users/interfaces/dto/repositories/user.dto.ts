@@ -15,4 +15,5 @@ export interface UpdateUserDto {
   email?: string;
   password?: string;
   phoneNumber?: string;
+  resetPasswordRequestId?: string | undefined | null;
 }

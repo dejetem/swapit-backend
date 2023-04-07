@@ -85,4 +85,30 @@ export default class GeneralHelpers {
    * @description Function to upload file on the server
    * @return
    */
+
+  /**
+   * @function generateUserToken
+   * @description Generate JWt Token for admin.
+   * @param payload The token payload
+   * @return string
+   */
+  public static generateUserToken(payload: TokenPayload): string {
+    const secret = fs.readFileSync(
+      path.join(
+        __dirname,
+        "..",
+        "configs",
+        "certs",
+        "user",
+        "private.pem"
+      )
+    );
+
+    console.log("algorithm: ", EnvironmentConfigs.getJwtTokenAlgorithm());
+    
+    return jwt.sign(payload, secret, {
+      algorithm: EnvironmentConfigs.getJwtTokenAlgorithm(),
+      expiresIn: EnvironmentConfigs.getJwtTokenDuration(),
+    } as any);
+  }
 }
