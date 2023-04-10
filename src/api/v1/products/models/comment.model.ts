@@ -17,7 +17,11 @@ const commentSchema = new Schema(
     },
     product: [
     { type: Schema.Types.ObjectId, ref: 'Product' }
-    ]
+    ],
+    createdAt: {
+      type: Date,
+      default: new Date(),
+   },
   },
   {
     timestamps: true,

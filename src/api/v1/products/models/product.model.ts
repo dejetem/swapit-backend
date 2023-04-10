@@ -12,9 +12,8 @@ const productSchema = new Schema(
         type:String,
         required:true
     },
-    creator: [
-      { type: Schema.Types.ObjectId, ref: 'User', default: null }
-    ],
+    creator:
+      { type: Schema.Types.ObjectId, ref: 'User', default: null },
     name: {
       type:String,
       required:true

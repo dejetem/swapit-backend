@@ -42,7 +42,7 @@ export interface ICreateCommentDto {
   name: string;
   product: string
 }
-
+export interface IFindAllProductCommentDto extends FindAllDto {product: string}
 
 
 

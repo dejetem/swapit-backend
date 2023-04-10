@@ -19,6 +19,14 @@ import ProductService from "../api/v1/products/services/product.service";
 
 import ProductRepository from "../api/v1/products/repositories/product.repository";
 
+import CommentRoutes from "../api/v1/products/routes/comment.routes";
+
+import CommentManagementController from "../api/v1/products/controllers/comment.controller";
+
+import CommentService from "../api/v1/products/services/comment.service";
+
+import CommentRepository from "../api/v1/products/repositories/comment.repository";
+
 
 /**
  * @description Router configuration
@@ -53,6 +61,16 @@ export default function AllRoutes() {
       )
     )
   );
+
+  router.use(
+    "/v1/managements/comment",
+    CommentRoutes(
+      new CommentManagementController(
+        new CommentService(new CommentRepository())
+      )
+    )
+  );
+
 
   return router;
 }
@@ -102,5 +120,23 @@ export default function AllRoutes() {
  *         creator:
  *           type: string
  *         name:
+ *           type: string
+ *     Comment:
+ *       type: object
+ *       required:
+ *         - name
+ *         - description
+ *         - creator
+ *         - product
+ *       properties:
+ *         id:
+ *           type: string
+ *         name:
+ *           type: string
+ *         description:
+ *           type: string
+ *         creator:
+ *           type: string
+ *         product:
  *           type: string       
  */
