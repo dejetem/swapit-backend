@@ -12,18 +12,20 @@ const productSchema = new Schema(
         type:String,
         required:true
     },
-    creator: {
-        type: Schema.Types.ObjectId,
-        required:true
+    creator:
+      { type: Schema.Types.ObjectId, ref: 'User', default: null },
+    name: {
+      type:String,
+      required:true
     },
-    name: String,
     tags: [String],
     selectedFile: String,
+    comments: [
+      { type: Schema.Types.ObjectId, ref: 'Comment', default: [] }
+    ],
     likeCount: {
-        type: [String], default: [] 
-    },
-    comments: { 
-        type: [String], default: [] 
+      type: [String],
+      default: []
     },
     createdAt: {
         type: Date,

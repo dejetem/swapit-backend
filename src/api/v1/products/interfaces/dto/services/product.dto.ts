@@ -36,5 +36,13 @@ export interface IUpdateProductDto {
   likeCount?: [string]
 }
 
+export interface ICreateCommentDto {
+  description: string;
+  creator: string;
+  name: string;
+  product: string
+}
+export interface IFindAllProductCommentDto extends FindAllDto {product: string}
+
 
 

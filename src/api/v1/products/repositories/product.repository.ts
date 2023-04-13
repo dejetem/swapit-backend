@@ -4,10 +4,10 @@ import ProductModel from "../models/product.model";
 
 import {
   CreateProductDto,
-  UpdateProductDto,
+  UpdateProductDto
 } from "../interfaces/dto/repositories/product.dto";
 import { IFindAllProductDto } from "../interfaces/dto/services/product.dto";
-import { Product } from "../interfaces/product.model";
+import { Product, Comment } from "../interfaces/product.model";
 
 import { QuerySort } from "../../../../interfaces/models/query.enum";
 
@@ -63,10 +63,10 @@ export default class ProductRepository {
     if (UpdateProductDto.selectedFile)
       product.selectedFile = UpdateProductDto.selectedFile;
 
-    if (UpdateProductDto.comments) product.comments = UpdateProductDto.comments;
-
     if (UpdateProductDto.likeCount)
       product.likeCount = UpdateProductDto.likeCount;
+    
+    if (UpdateProductDto.comments) product.comments = UpdateProductDto.comments;
 
     if (UpdateProductDto.creator) product.creator = UpdateProductDto.creator;
 

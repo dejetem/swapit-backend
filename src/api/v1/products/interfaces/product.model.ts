@@ -9,3 +9,11 @@ export interface Product {
   likeCount: [string];
   comments: [string];
 }
+
+export interface Comment {
+  id: string;
+  description: string;
+  creator: string;
+  name: string;
+  product: string
+}
