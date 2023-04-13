@@ -5,6 +5,8 @@ export interface User {
   email: string;
   password: string;
   phoneNumber: string;
+  comments: string[];
+  products: string[];
   resetToken?: string;
   resetTokenExpiration?: Date;
 }

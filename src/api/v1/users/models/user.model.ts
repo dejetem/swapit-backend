@@ -14,7 +14,20 @@ const UserSchema = new Schema(
     },
     email: {
       type: String,
-      reauired: true,
+      unique: true,
+      required: true,
+    },
+    comments: {
+      type: [Schema.Types.ObjectId],
+      required: false,
+      ref: "Comment",
+      select: false,
+    },
+    products: {
+      type: [Schema.Types.ObjectId],
+      required: false,
+      ref: "Product",
+      select: false,
     },
     password: {
       type: String,

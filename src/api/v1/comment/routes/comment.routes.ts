@@ -19,18 +19,13 @@ export default function CommentRoutes(
 
   /**
    * @swagger
-   * /api/v1/managements/comment/{product}:
+   * /api/v1/managements/comment:
    *   get:
    *     security:
    *      - bearerAuth: []
    *     summary: Get list of Comment for a Product.
    *     tags: [Comment Management]
    *     parameters:
-   *       - name: product
-   *         in: path
-   *         required: true
-   *         schema:
-   *           type: string
    *       - name: page
    *         in: query
    *         required: false
@@ -99,8 +94,8 @@ export default function CommentRoutes(
    *       500:
    *         description: Erreur serveur
    */
-  router.get("/:product", (req: Request, res: Response, next: NextFunction) =>
-    commentManagementController.findOneProductComment(req, res, next)
+  router.get("/", (req: Request, res: Response, next: NextFunction) =>
+    commentManagementController.findAll(req, res, next)
   );
 
   /**
@@ -162,22 +157,22 @@ export default function CommentRoutes(
    *          schema:
    *            type: object
    *            properties:
-   *              name:
+   *              title:
    *                type: string
    *                required: true
    *                example: apple watch ultra
-   *              description:
+   *              content:
    *                type: string
    *                required: true
    *                example: lorem ipsum dolor sit amet
    *              creator:
    *                type: string
    *                required: true
-   *                example: items.
+   *                example: 64300352bb22bbc7eb418e8c
    *              product:
    *                type: string
    *                required: true
-   *                example: lorem
+   *                example: 6430416607fc0995e82d3f1d
    *     responses:
    *       201:
    *         description: Comment successufully created.
@@ -205,7 +200,7 @@ export default function CommentRoutes(
   router.post(
     "/",
     [
-      body(["name", "description", "creator", "product"])
+      body(["title", "content", "creator", "product"])
         .not()
         .isEmpty()
         .withMessage({
@@ -220,7 +215,7 @@ export default function CommentRoutes(
 
   /**
    * @swagger
-   * /api/v1/managements/product/{id}:
+   * /api/v1/managements/comment/{id}:
    *   delete:
    *     summary: Delete a Comment.
    *     tags: [Comment Management]

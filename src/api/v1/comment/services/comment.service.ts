@@ -2,16 +2,14 @@ import createHttpError from "http-errors";
 
 import CommentRepository from "../repositories/comment.repository";
 
-
-
 import {
   ICreateCommentDto
-} from "../interfaces/dto/services/product.dto";
+} from "../interfaces/dto/services/comment.dto";
 import {
   CreateCommentDto
-} from "../interfaces/dto/repositories/product.dto";
-import { Comment } from "../interfaces/product.model";
-import { IFindAllProductCommentDto } from "../interfaces/dto/services/product.dto";
+} from "../interfaces/dto/repositories/comment.dto";
+import { Comment } from "../interfaces/comment.model";
+import { IFindAllCommentDto } from "../interfaces/dto/services/comment.dto";
 
 import { ProductValidationMessage } from "../validations/product.validations";
 
@@ -35,29 +33,32 @@ export default class CommentService {
   }
   
   /**
-   * @function findOneProductComment
-   * @description: Get list of comment by product id
-   * @param product: The product id.
-   * @return Promise<{ comment: Comment[] }>
+   * @function findAll
+   * @description Get the list of all admins
+   * @param iFindAllAdminsDto An object of type IFindAllAdminsDto containing the query filters
+   * @return Promise<{ admins: Admin[]; totalElements: number }>
    */
-  public async findOneProductComment(product: any): Promise<
-     {
-      comment: Comment[];
-      totalElements: number;
-     }
+  public async findAll(
+    iFindAllCommentDto: IFindAllCommentDto
+  ): Promise<{ comments: Comment[]; totalElements: number }> {
+    let comments: Comment[] = [];
 
-  > {
-    let comment: Comment[] = [];
-    let totalElements: any;
-    comment = await this.commentRepository.findOneProductComment(product);
+    let totalElements = await this.commentRepository.countAll();
 
-    if (!comment) {
-      throw new createHttpError.NotFound(ProductValidationMessage.COMMENT_NOT_FOUND);
+    if (iFindAllCommentDto.size === -1) {
+      comments = await this.commentRepository.findAll({
+        sort: iFindAllCommentDto.sort,
+      });
     } else {
-      return { comment, totalElements };
+      comments = await this.commentRepository.findAll({
+        size: iFindAllCommentDto.size,
+        sort: iFindAllCommentDto.sort,
+        page: iFindAllCommentDto.page,
+      });
     }
-  }
 
+    return { comments, totalElements };
+  }
 
   /**
    * @function create
@@ -66,18 +67,15 @@ export default class CommentService {
    * @return Promise<Product>
    */
   public async create(ICreateCommentDto: ICreateCommentDto): Promise<Comment | null> {
-    let product: any = await this.findOne(ICreateCommentDto.product);
-    if (!product) return null;
+
     const CreateCommentDto: CreateCommentDto = {
-      description: ICreateCommentDto.description,
+      title: ICreateCommentDto.title,
+      content: ICreateCommentDto.content,
       creator: ICreateCommentDto.creator,
-      name: ICreateCommentDto.name,
       product: ICreateCommentDto.product
     };
      
     let comment = await this.commentRepository.create(CreateCommentDto);
-    product.comments.push(comment?.id)
-    product.save()
 
     return comment;
   }

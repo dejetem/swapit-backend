@@ -4,9 +4,9 @@ import { validationResult } from "express-validator";
 import CommentService from "../services/comment.service";
 
 import {
-  IFindAllProductCommentDto,
+  IFindAllCommentDto,
   ICreateCommentDto,
-} from "../interfaces/dto/services/product.dto";
+} from "../interfaces/dto/services/comment.dto";
 
 import { QuerySort } from "../../../../interfaces/models/query.enum";
 
@@ -21,25 +21,22 @@ import { ResponseError } from "../../../../interfaces/error.interface";
 export default class CommentManagementController {
   constructor(private commentService: CommentService) {}
 
-  public async findOneProductComment(req: JWTRequest, res: Response, next: NextFunction) {
+  public async findAll(req: Request, res: Response, next: NextFunction) {
     try {
-      let { page, size, sort, product } = req.query;
+      let { page, size, sort } = req.query;
 
-      const sub: any = req.auth;
-
-      const params: IFindAllProductCommentDto = {
-        product: String(product),
+      const params: IFindAllCommentDto = {
         page: Number(page) || 1,
         sort: (sort as QuerySort) || QuerySort.DESC,
         size: Number(size) || EnvironmentConfigs.getPaginationItemsPerPage(),
       };
 
-      const { comment, totalElements } = await this.commentService.findOneProductComment(
+      const { comments, totalElements } = await this.commentService.findAll(
         params
       );
 
       const response = GeneralHelpers.getPage(
-        comment,
+        comments,
         params.page as number,
         params.size as number,
         totalElements
@@ -56,7 +53,7 @@ export default class CommentManagementController {
     }
   }
 
-  public async findOne(req: JWTRequest, res: Response, next: NextFunction) {
+  public async findOne(req: Request, res: Response, next: NextFunction) {
     try {
       let { id } = req.params;
 
@@ -85,17 +82,16 @@ export default class CommentManagementController {
       }
 
       const sub: any = req.auth;
-
-      console.log(sub);
       
-      const { product, description, name } = req.body;
+      const { product, title, content } = req.body;
 
       const ICreateCommentDto: ICreateCommentDto = {
+        title,
         product,
-        description,
+        content,
         creator: sub.userId,
-        name,
       };
+
       const comment = await this.commentService.create(ICreateCommentDto);
 
       res
@@ -112,7 +108,7 @@ export default class CommentManagementController {
   }
 
 
-  public async delete(req: JWTRequest, res: Response, next: NextFunction) {
+  public async delete(req: Request, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req);
 
