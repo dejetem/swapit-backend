@@ -19,7 +19,7 @@ export interface ICreateProductDto {
   brandName: string;
   description: string;
   tags: [string];
-  files?: [String];
+  files?: any;
   creator: string;
   name: string;
 }

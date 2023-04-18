@@ -182,7 +182,7 @@ export default function ProductRoutes(
    *     requestBody:
    *      required: true
    *      content:
-   *        application/json:
+   *        multipart/form-data:
    *          schema:
    *            type: object
    *            properties:
@@ -200,8 +200,7 @@ export default function ProductRoutes(
    *                example: items.
    *              files:
    *                type: string
-   *                required: true
-   *                example: lorem
+   *                format: binary
    *              name:
    *                type: string
    *                required: true
@@ -232,7 +231,7 @@ export default function ProductRoutes(
    */
   router.post(
     "/",
-    upload.array("files", 10),
+    upload.single("files"),
     [
       body(["brandName", "description", "tags"])
         .not()

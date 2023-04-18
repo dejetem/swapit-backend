@@ -31,8 +31,7 @@ const productSchema = new Schema(
       },
     ],
     files: {
-      type: [String],
-      default: [],
+      type: String,
       required: false,
     },
     likeCount: {

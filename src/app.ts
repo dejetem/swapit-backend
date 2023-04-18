@@ -28,4 +28,9 @@ ApplicationConfigs.initRoutes(app);
  */
 ApplicationConfigs.handleErrors(app);
 
+/**
+ * @description Initialize upload directory
+ */
+ApplicationConfigs.fileDirectoryInitializer();
+
 export default server;

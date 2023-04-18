@@ -18,6 +18,8 @@ import {
 import allRoutes from "../routes/index.routes";
 import ApiResponses from "../helpers/api-responses.helper";
 
+import fs from "fs";
+
 export default class ApplicationConfigs {
   static init(app: Application): void {
     app.use(express.json());
@@ -58,6 +60,25 @@ export default class ApplicationConfigs {
         ],
       })
     );
+  }
+
+  static fileDirectoryInitializer() {
+    /**
+     * @description Create upload direcotry
+     */
+    const parentFolderName = "upload";
+    const folderName = "images";
+
+    const parentPath = `./${parentFolderName}`;
+    const path = `${parentPath}/${folderName}`;
+
+    if (!fs.existsSync(parentPath)) {
+      fs.mkdirSync(parentPath);
+    }
+
+    if (!fs.existsSync(path)) {
+      fs.mkdirSync(path);
+    }
   }
 
   static initRoutes(app: Application): void {

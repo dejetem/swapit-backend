@@ -87,6 +87,10 @@ export default class ProductManagementController {
       const sub: any = req.auth;
 
       console.log(sub);
+
+      let picture = req.file?.filename;
+
+      console.log(picture);
       
       const { brandName, description, tags, files, name } = req.body;
 
@@ -94,7 +98,7 @@ export default class ProductManagementController {
         brandName,
         description,
         tags,
-        files,
+        files: picture,
         creator: sub.userId,
         name,
       };
