@@ -7,7 +7,7 @@ import {
   UpdateProductDto
 } from "../interfaces/dto/repositories/product.dto";
 import { IFindAllProductDto } from "../interfaces/dto/services/product.dto";
-import { Product, Comment } from "../interfaces/product.model";
+import { Product } from "../interfaces/product.model";
 
 import { QuerySort } from "../../../../interfaces/models/query.enum";
 
@@ -39,7 +39,7 @@ export default class ProductRepository {
       brandName: CreateProductDto.brandName,
       description: CreateProductDto.description,
       tags: CreateProductDto.tags,
-      selectedFile: CreateProductDto.selectedFile,
+      selectedFile: CreateProductDto.files,
       creator: CreateProductDto.creator,
       name: CreateProductDto.name,
     });
@@ -60,8 +60,8 @@ export default class ProductRepository {
 
     if (UpdateProductDto.tags) product.tags = UpdateProductDto.tags;
 
-    if (UpdateProductDto.selectedFile)
-      product.selectedFile = UpdateProductDto.selectedFile;
+    // if (UpdateProductDto.files)
+    //   product.files = UpdateProductDto.files;
 
     if (UpdateProductDto.likeCount)
       product.likeCount = UpdateProductDto.likeCount;

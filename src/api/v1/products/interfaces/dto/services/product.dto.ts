@@ -10,7 +10,7 @@ export interface IFindProductDto {
   creator: string;
   name: string;
   tags: [string];
-  selectedFile: String;
+  files: [String];
   likeCount: [string];
   comments: [string];
 }
@@ -19,7 +19,7 @@ export interface ICreateProductDto {
   brandName: string;
   description: string;
   tags: [string];
-  selectedFile?: String;
+  files?: [String];
   creator: string;
   name: string;
 }
@@ -31,18 +31,7 @@ export interface IUpdateProductDto {
   creator: string;
   name: string;
   tags?: [string];
-  selectedFile?: String;
+  files?: String;
   comments?: [string];
   likeCount?: [string]
 }
-
-export interface ICreateCommentDto {
-  description: string;
-  creator: string;
-  name: string;
-  product: string
-}
-export interface IFindAllProductCommentDto extends FindAllDto {product: string}
-
-
-

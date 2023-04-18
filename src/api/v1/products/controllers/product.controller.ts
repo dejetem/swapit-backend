@@ -88,13 +88,13 @@ export default class ProductManagementController {
 
       console.log(sub);
       
-      const { brandName, description, tags, selectedFile, name } = req.body;
+      const { brandName, description, tags, files, name } = req.body;
 
       const ICreateProductDto: ICreateProductDto = {
         brandName,
         description,
         tags,
-        selectedFile,
+        files,
         creator: sub.userId,
         name,
       };
@@ -131,7 +131,7 @@ export default class ProductManagementController {
         creator,
         name,
         tags,
-        selectedFile,
+        files,
         likeCount,
         comments,
       } = req.body;
@@ -143,7 +143,7 @@ export default class ProductManagementController {
         creator,
         name,
         tags,
-        selectedFile,
+        files,
         likeCount,
         comments,
       };

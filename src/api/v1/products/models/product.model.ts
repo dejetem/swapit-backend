@@ -5,31 +5,39 @@ import { Product } from "../interfaces/product.model";
 const productSchema = new Schema(
   {
     brandName: {
-        type:String,
-        required:true
+      type: String,
+      required: true,
     },
     description: {
-        type:String,
-        required:true
+      type: String,
+      required: true,
     },
-    creator:
-      { type: Schema.Types.ObjectId, ref: 'User', default: null },
+    creator: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
     name: {
-      type:String,
-      required:true
+      type: String,
+      required: true,
     },
     tags: [String],
     selectedFile: String,
     comments: [
-      { type: Schema.Types.ObjectId, ref: 'Comment', default: [] }
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Comment",
+        default: [],
+      },
     ],
+    files: {
+      type: [String],
+      default: [],
+      required: false,
+    },
     likeCount: {
       type: [String],
-      default: []
-    },
-    createdAt: {
-        type: Date,
-        default: new Date(),
+      default: [],
     },
   },
   {
@@ -42,6 +50,6 @@ const productSchema = new Schema(
       },
     },
   }
-)
+);
 
 export default model<Product & Document>("Product", productSchema);

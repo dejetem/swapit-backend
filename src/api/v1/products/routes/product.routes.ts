@@ -5,6 +5,35 @@ import { ProductValidationMessage } from "../validations/product.validations";
 import ProductManagementController from "../controllers/product.controller";
 
 import { body } from "express-validator";
+import { extname, join } from "path";
+import multer from "multer";
+
+const uploadPath = join(process.cwd(), "upload", "images");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadPath);
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, file.fieldname + "-" + uniqueSuffix + extname(file.originalname));
+  },
+});
+
+const upload = multer({
+  storage,
+  fileFilter: function (req, file, cb) {
+    if (
+      ["image/jpeg", "image/png", "image/jpg", "image/jpeg"].includes(
+        file.mimetype
+      )
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+    }
+  },
+});
 
 export default function ProductRoutes(
   productManagementController: ProductManagementController
@@ -169,7 +198,7 @@ export default function ProductRoutes(
    *                type: string
    *                required: true
    *                example: items.
-   *              selectedFile:
+   *              files:
    *                type: string
    *                required: true
    *                example: lorem
@@ -203,8 +232,9 @@ export default function ProductRoutes(
    */
   router.post(
     "/",
+    upload.array("files", 10),
     [
-      body(["brandName", "description", "selectedFile", "tags"])
+      body(["brandName", "description", "tags"])
         .not()
         .isEmpty()
         .withMessage({

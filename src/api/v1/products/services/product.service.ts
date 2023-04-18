@@ -70,12 +70,11 @@ export default class ProductService {
    */
   public async create(ICreateProductDto: ICreateProductDto): Promise<Product> {
 
-
     const CreateProductDto: CreateProductDto = {
       brandName: ICreateProductDto.brandName,
       description: ICreateProductDto.description,
       tags: ICreateProductDto.tags,
-      selectedFile: ICreateProductDto.selectedFile,
+      files: ICreateProductDto.files,
       creator: ICreateProductDto.creator,
       name: ICreateProductDto.name
     };
@@ -106,7 +105,7 @@ export default class ProductService {
       brandName: IUpdateProductDto.brandName,
       description: IUpdateProductDto.description,
       tags: IUpdateProductDto.tags,
-      selectedFile: IUpdateProductDto.selectedFile,
+      files: IUpdateProductDto.files,
       creator: IUpdateProductDto.creator,
       name: IUpdateProductDto.name,
       comments: IUpdateProductDto.comments,

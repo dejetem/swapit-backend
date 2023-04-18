@@ -4,7 +4,7 @@ export interface CreateProductDto {
   brandName: string;
   description: string;
   tags: [string];
-  selectedFile?: String;
+  files?: [String];
   creator: string;
   name: string;
 }
@@ -14,7 +14,7 @@ export interface UpdateProductDto {
   brandName: string;
   description: string;
   tags?: [string];
-  selectedFile?: String;
+  files?: String;
   creator: string;
   name: string;
   comments?: [string];
