@@ -14,7 +14,7 @@
   "scripts": {
     "postinstall": "yarn run build",
     "prebuild": "rimraf dist",
-    "build": "tsc",
+    "build": "npx tsc",
     "dev": "nodemon src/server",
     "start": "node dist/server",
     "test": "jest",
