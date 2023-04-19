@@ -12,7 +12,6 @@
     "url": "git+https://github.com/Hapy06/Hapy-API.git"
   },
   "scripts": {
-    "prebuild": "rimraf dist",
     "build": "npx tsc",
     "dev": "nodemon src/server",
     "start": "node dist/server.js",
