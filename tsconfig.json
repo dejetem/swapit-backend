@@ -8,6 +8,7 @@
     "outDir": "dist",
     "pretty": true,
     "sourceMap": true,
+    "rootDir": "./src",
     "target": "es6",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
