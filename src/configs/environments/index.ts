@@ -38,7 +38,8 @@ export default class EnvironmentConfigs {
         : process.env.SWAP_IT_DEV_MONGODB_DATABASE_HOST;
       
     let databaseUri = `mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@${MONGODB_DATABASE_HOST}/${MONGODB_DATABASE_NAME}`
-    
+    if (!databaseUri)
+        return "DB URL NOT FOUND";
     return databaseUri;
   }
 
