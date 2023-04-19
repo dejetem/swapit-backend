@@ -12,6 +12,7 @@
     "url": "git+https://github.com/Hapy06/Hapy-API.git"
   },
   "scripts": {
+    "postinstall": "yarn run build",
     "prebuild": "rimraf dist",
     "build": "tsc",
     "dev": "nodemon src/server",
