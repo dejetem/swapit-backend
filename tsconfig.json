@@ -9,7 +9,7 @@
     "pretty": true,
     "sourceMap": true,
     "rootDir": "./src",
-    "target": "es2021",
+    "target": "es6",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
