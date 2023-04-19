@@ -9,7 +9,7 @@
     "pretty": true,
     "sourceMap": true,
     "rootDir": "./src",
-    "target": "es6",
+    "target": "esnext",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
