@@ -4,7 +4,7 @@
     "test": "tests"
   },
   "version": "1.0.0",
-  "main": "src/server.ts",
+  "main": "server.js",
   "author": "Ora digital <direction.hapy@gmail.com>",
   "license": "ISC",
   "repository": {
@@ -15,7 +15,7 @@
     "prebuild": "rimraf dist",
     "build": "npx tsc",
     "dev": "nodemon src/server",
-    "start": "node dist/server",
+    "start": "node dist/server.js",
     "test": "jest",
     "test:watch": "jest"
   },
